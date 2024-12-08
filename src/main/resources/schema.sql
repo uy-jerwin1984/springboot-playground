@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS customer (id uuid DEFAULT gen_random_uuid(), name VARCHAR(255));
