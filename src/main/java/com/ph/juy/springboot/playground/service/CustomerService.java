@@ -15,8 +15,6 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public Mono<Customer> create(final Customer customer) {
-        //customer.setId(UUID.randomUUID().toString());
-        customer.setName(UUID.randomUUID().toString());
         return customerRepository.save(customer);
     }
 
