@@ -11,9 +11,19 @@ import reactor.core.publisher.Mono;
 public class ObjectDefinitionService {
 
     private final ObjectDefinitionRepository objectDefinitionRepository;
+    private final TenantService tenantService;
 
     public Mono<ObjectDefinition> create(final ObjectDefinition objectDefinition) {
-        return objectDefinitionRepository.save(objectDefinition);
+        final Mono<ObjectDefinition> result = tenantService.find(objectDefinition.getTenant())
+                .flatMap(tenant -> {
+                    System.out.println("ObjectDefinitionService > " + tenant);
+                    System.out.println("ObjectDefinitionService > " + objectDefinition);
+                    return objectDefinitionRepository.save(objectDefinition);
+                });
+        result.subscribe(r -> {
+            System.out.println("ObjectDefinitionService > " + r);
+        });
+        return result;
     }
 
 }

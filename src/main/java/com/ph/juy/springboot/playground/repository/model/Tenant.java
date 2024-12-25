@@ -18,4 +18,6 @@ public class Tenant {
     @Column(name = "created_at")
     private Instant createdAt;
 
+//    @OneToMany(mappedBy = "tenant", fetch = FetchType.LAZY)
+//    private List<ObjectDefinition> objectDefinitions;
 }
