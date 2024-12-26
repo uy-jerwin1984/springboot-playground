@@ -1,6 +1,7 @@
 package com.ph.juy.springboot.playground.repository.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Data;
 
 import java.time.Instant;
