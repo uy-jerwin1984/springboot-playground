@@ -4,8 +4,8 @@ import com.ph.juy.springboot.playground.repository.CustomerRepository;
 import com.ph.juy.springboot.playground.repository.model.Customer;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,11 +14,12 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public Mono<Customer> create(final Customer customer) {
+    public Customer create(final Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public Mono<Customer> findById(final UUID id) {
+    public Optional<Customer> findById(final UUID id) {
         return customerRepository.findById(id);
     }
+
 }

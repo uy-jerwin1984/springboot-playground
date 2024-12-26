@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
-
-import java.time.Instant;
 
 @RestController
 @RequestMapping("/object_definitions")
@@ -23,15 +20,8 @@ public class ObjectDefinitionController {
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public Mono<ResponseEntity<ObjectDefinition>> create(@RequestBody ObjectDefinition objectDefinition) {
-        objectDefinition.setCreatedAt(Instant.now());
-
-        System.out.println("ObjectDefinitionController -> " + objectDefinition);
-
-        return objectDefinitionService.create(objectDefinition)
-                .map(ResponseEntity::ok)
-                .doOnError(Throwable::printStackTrace)
-                .onErrorReturn(ResponseEntity.internalServerError().build());
+    public ResponseEntity<ObjectDefinition> create(@RequestBody ObjectDefinition objectDefinition) {
+        return ResponseEntity.badRequest().build();
     }
 
 }

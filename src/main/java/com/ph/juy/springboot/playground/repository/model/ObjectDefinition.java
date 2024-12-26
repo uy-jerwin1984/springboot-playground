@@ -1,11 +1,7 @@
 package com.ph.juy.springboot.playground.repository.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -15,6 +11,7 @@ import java.util.UUID;
 public class ObjectDefinition {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @ManyToOne
     @JoinColumn(name = "tenant_id", nullable = false)

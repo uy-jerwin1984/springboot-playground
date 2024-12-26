@@ -4,8 +4,8 @@ import com.ph.juy.springboot.playground.repository.TenantRepository;
 import com.ph.juy.springboot.playground.repository.model.Tenant;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,16 +14,16 @@ public class TenantService {
 
     private final TenantRepository tenantRepository;
 
-    public Mono<Tenant> create(final Tenant tenant) {
+    public Tenant create(final Tenant tenant) {
         return tenantRepository.save(tenant);
     }
 
-    public Mono<Tenant> find(final Tenant tenant) {
+    public Optional<Tenant> find(final Tenant tenant) {
         final UUID tenantId = tenant.getId();
-        return tenantRepository.findById(tenantId).defaultIfEmpty(new Tenant());
+        return tenantRepository.findById(tenantId);
     }
 
-    public Mono<Tenant> findById(final UUID uuid) {
+    public Optional<Tenant> findById(final UUID uuid) {
         return tenantRepository.findById(uuid);
     }
 

@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -20,14 +20,16 @@ public class CustomerController {
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public Mono<Customer> create(@RequestBody Customer customer) {
-        return customerService.create(customer);
+    public ResponseEntity<Customer> create(@RequestBody Customer customer) {
+        final Customer result = customerService.create(customer);
+        return ResponseEntity.ok(result);
     }
-
+    
     @GetMapping(path = { "/{id}"},
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public Mono<ResponseEntity<Customer>> findById(@PathVariable("id") UUID id) {
-        return customerService.findById(id).flatMap(customer -> customer != null ? Mono.just(ResponseEntity.ok(customer)) : Mono.just(ResponseEntity.badRequest().build()));
+    public ResponseEntity<Customer> findById(@PathVariable("id") UUID id) {
+        final Optional<Customer> customer = customerService.findById(id);
+        return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
 }
