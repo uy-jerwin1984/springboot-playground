@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS field_definition (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     tenant_id uuid NOT NULL,
     object_definition_id uuid NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(255) NOT NULL,
-    "default" VARCHAR(255) NOT NULL,
+    field_name VARCHAR(255) NOT NULL,
+    field_type VARCHAR(255) NOT NULL,
+    default_value VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS field_instance (
     tenant_id uuid NOT NULL,
     object_instance_id uuid NOT NULL,
     field_definition_id uuid NOT NULL,
-    "value" VARCHAR(255) NOT NULL,
+    field_value VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
 

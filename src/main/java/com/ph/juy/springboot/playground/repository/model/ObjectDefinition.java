@@ -1,10 +1,10 @@
 package com.ph.juy.springboot.playground.repository.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.Data;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,4 +21,19 @@ public class ObjectDefinition {
     private String label;
     @Column(name = "created_at")
     private Instant createdAt;
+    @OneToMany(mappedBy = "objectDefinition", cascade = CascadeType.ALL)
+    private List<FieldDefinition> fieldDefinitions;
+
+    @PrePersist
+    public void propagate() {
+        if (fieldDefinitions != null) {
+            final ObjectDefinition copy = new ObjectDefinition();
+            fieldDefinitions.forEach(e -> {
+                e.setCreatedAt(Instant.now());
+                e.setTenant(this.getTenant());
+                e.setObjectDefinition(this);
+            });
+        }
+    }
+
 }
